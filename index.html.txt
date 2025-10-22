@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tombstone Housekeeping</title>
+  <style>
+    body { font-family: sans-serif; margin:20px; }
+    input, select, textarea, button { width:100%; margin:6px 0; padding:8px; }
+    button { background:#005baa; color:white; border:none; }
+  </style>
+</head>
+<body>
+  <h2>Daily Room Update</h2>
+  <input id="room" placeholder="Room number">
+  <select id="status">
+    <option value="Dirty">Dirty</option>
+    <option value="Clean">Clean</option>
+    <option value="Inspect">Inspect</option>
+  </select>
+  <input id="assignedTo" placeholder="Staff name">
+  <textarea id="notes" placeholder="Notes (optional)"></textarea>
+  <button id="send">Submit</button>
+
+  <script>
+    document.getElementById('send').onclick = async () => {
+      const payload = {
+        room: document.getElementById('room').value,
+        status: document.getElementById('status').value,
+        assignedTo: document.getElementById('assignedTo').value,
+        notes: document.getElementById('notes').value
+      };
+      const res = await fetch('https://script.google.com/macros/s/AKfycbzZzZI7lYyInpJTbtYgmWyfqxxRyHhZJuauy9kwF01V1tygSlFTPb88l-iDyEfRWGjG/exec', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+      if(res.ok) alert('Saved');
+    };
+  </script>
+</body>
+</html>
